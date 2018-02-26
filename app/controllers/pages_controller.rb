@@ -9,14 +9,14 @@ class PagesController < ApplicationController
     @page = Page.find(params[:id])
   end
 
-  #GET /pages/:id/edit
-  def edit
-    @page = Page.find(params[:id])
-  end
-
   #GET /pages/new
   def new
     @page = Page.new
+  end
+
+  #GET /pages/:id/edit
+  def edit
+    @page = Page.find(params[:id])
   end
 
   #POST /pages
@@ -30,15 +30,22 @@ class PagesController < ApplicationController
     end
   end
 
-  #PUT/PATCH /pages/:id
+  # PUT / PATCH /pages/:id
   def update
     @page = Page.find(params[:id])
-    if @page.update(page-params)
+
+    if @page.update(page_params)
       redirect_to page_path(@page)
     else
       render :edit
+    end
   end
-end 
+
+  #DELETE /pages/:id
+  def destroy
+    Page.find(params[:id]).destroy
+    redirect_to pages_path
+  end
 
   private
     def page_params
